@@ -7,91 +7,53 @@ Date: April 5, 2021
 
 
 ## UML Diagram for server
+![My UML](uml.png)
+
+Note that Constants, RandomGenerators, and Move implementations have use dependencies with other models in the server
+
 ### PlantUML code
 ```plantuml
 @startuml
 skinparam classAttributeIconSize 0
+hide members
 
 package server {
     package servercontroller {
-        class GameController {
-            + startGame(): void
-            + restartGame(): void
-            + getBoardState(): int[]
-            + checkGameOver(): bool
-            + checkWinCondition(): bool
-            + checkLoseCondition(): bool
-            + moveLeft(): void
-            + moveRight(): void
-            + moveUp(): void
-            + moveDown(): void
-        }
+        class ServerController
         class ModelController
     }
 
     package servermodel {
-        class Board {
-            - board: int[][]
-            - occupiedCount: int
-            # checkWinner(): bool
-            # checkLoser(): bool
-            # addNumAtTile(num: int, rowIdx: int, colIdx: int): int
-            # changeNumAtTile(num: int, rowIdx: int, colIdx: int): int
-        }
-        
-        abstract class Player {
-            - board: Board
-            - move: MoveMaker
-            # moveUp(): void
-            # moveRight(): void
-            # moveDown(): void
-            # moveLeft(): void
-            # setBoard(board: Board): void
-        }
+        class Board
 
-        class HumanPlayer implements Player {
-            # moveUp(): void
-            # moveRight(): void
-            # moveDown(): void
-            # moveLeft(): void
-        }
+        class GameManager
 
-        class GameManager {
-            - player: Player
-            - board: Board
-            - randomizer: RandomGenerator
-            # startGame(): void
-            # setPlayer(player: Player): void
-            # setBoard(board: Board): void
-        }
 
-        class RandomGenerator {
-            
-        }
+        class Game
 
-        class Game {
-            - board: Board
-            - manager: GameManager
-            # setGameManager(GameManager manager): void
-        }
 
-        interface Constants {
-            + WIN_NUMBER: int = 2048
-            + EMPTY_TILE_NUM: int = 0
-            + BOARD_SIDE_LENGTH: int = 4
-        }
+        abstract class Move
 
-        interface MoveMaker {
-        }
+        class LeftMove extends Move
+        class UpMove extends Move
+        class RightMove extends Move
+        class DownMove extends Move
 
-        class BoardUpdater implements MoveMaker {
-            + makeMove(moveCode: int): void
-        }
+        interface Constants
+        class RandomGenerator
     }
+}
 
-ModelController o- GameController
-GameManager o-- RandomGenerator
-Game *-- Board
+package client {
+    class SimpleClient
+}
+
+ServerController - SimpleClient
+ServerController *-- ModelController
+Game --o ModelController
+ModelController o-- GameManager
+Game o-- Board
+GameManager -- Board
 
 hide members
 @enduml
