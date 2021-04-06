@@ -5,6 +5,8 @@ Date completed: April 6, 2021
 ## Description
 A command-line version of the 2048 game using Java.
 
+To begin a game, run the `main()` method in `SimpleClient`.
+
 ## List of assumptions and additional notes
 - The game board has a short length (e.g. length of 4) which means that performing operations that modifying the board of time complexity O(n^2) will not have much affect on performance. For example, when making a move, I chose to consider more readability/maintainability using abstract methods and a single algorithmic method for sliding values in an array. That meant my functions for reversing an array and extracting the column array use additional for loops.
 - A single row/column can have multiple collisions as long as a collision doesn't happen at the same index more than once (e.g. [2 2 2 2] with a left move results in [4 4 0 0])
