@@ -1,9 +1,9 @@
-# Toolshop Project - ENSF 607/608
-UML diagram name: Avtex - 2048 Game
+# A Game of 2048
+UML diagram name: 2048 Game
 <br>
 Created by: Patrick Linang
 <br>
-Date: April 5, 2021
+Date: April 6, 2021
 
 
 ## UML Diagram for server
